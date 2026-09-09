@@ -1,0 +1,18 @@
+{
+  "name": "cclx-economic-lab",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first CCLX mock platform and quantitative economic testing laboratory",
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "node scripts/build.mjs",
+    "start": "node server.mjs",
+    "test": "node --experimental-vm-modules --test tests/*.test.mjs",
+    "check": "npm test && npm run build",
+    "report": "node scripts/generate-report.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

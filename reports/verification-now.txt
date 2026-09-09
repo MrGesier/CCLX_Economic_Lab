@@ -1,0 +1,160 @@
+
+> cclx-economic-lab@1.1.0 test
+> node --experimental-vm-modules --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: working assumptions reconcile exactly to the maximum supply
+ok 1 - working assumptions reconcile exactly to the maximum supply
+  ---
+  duration_ms: 2.580521
+  type: 'test'
+  ...
+# Subtest: invalid configurations are rejected before simulation
+ok 2 - invalid configurations are rejected before simulation
+  ---
+  duration_ms: 1.063235
+  type: 'test'
+  ...
+# Subtest: cliff, linear vesting and reward ceilings have correct boundaries
+ok 3 - cliff, linear vesting and reward ceilings have correct boundaries
+  ---
+  duration_ms: 0.327575
+  type: 'test'
+  ...
+# Subtest: restricted releases and unissued rewards are excluded from sellable unlocks
+ok 4 - restricted releases and unissued rewards are excluded from sellable unlocks
+  ---
+  duration_ms: 3.437209
+  type: 'test'
+  ...
+# Subtest: legacy bridge ratio derives from valuation and respects both caps
+ok 5 - legacy bridge ratio derives from valuation and respects both caps
+  ---
+  duration_ms: 1.223302
+  type: 'test'
+  ...
+# Subtest: cash waterfall and rewards conserve capped resources
+ok 6 - cash waterfall and rewards conserve capped resources
+  ---
+  duration_ms: 0.667018
+  type: 'test'
+  ...
+# Subtest: curve integral and inverse are stable across reserves
+ok 7 - curve integral and inverse are stable across reserves
+  ---
+  duration_ms: 0.293385
+  type: 'test'
+  ...
+# Subtest: randomized reserve-curve trades never create unfunded collateral
+ok 8 - randomized reserve-curve trades never create unfunded collateral
+  ---
+  duration_ms: 2.133669
+  type: 'test'
+  ...
+# Subtest: AMM outputs are finite, monotone, and never exceed reserves
+ok 9 - AMM outputs are finite, monotone, and never exceed reserves
+  ---
+  duration_ms: 0.516505
+  type: 'test'
+  ...
+# Subtest: market execution has finite funding and preserves order-book inventory accounting
+ok 10 - market execution has finite funding and preserves order-book inventory accounting
+  ---
+  duration_ms: 1.820114
+  type: 'test'
+  ...
+# Subtest: marginal-price depth is monotone and fee-independent
+ok 11 - marginal-price depth is monotone and fee-independent
+  ---
+  duration_ms: 0.561712
+  type: 'test'
+  ...
+# Subtest: slippage guards preserve unfilled orders rather than assuming infinite depth
+ok 12 - slippage guards preserve unfilled orders rather than assuming infinite depth
+  ---
+  duration_ms: 10.720252
+  type: 'test'
+  ...
+# Subtest: finite external arbitrage cannot replenish a DEX without resources
+ok 13 - finite external arbitrage cannot replenish a DEX without resources
+  ---
+  duration_ms: 0.449595
+  type: 'test'
+  ...
+# Subtest: launch liquidity audit and sizing honor cash and token allocations
+ok 14 - launch liquidity audit and sizing honor cash and token allocations
+  ---
+  duration_ms: 42.355601
+  type: 'test'
+  ...
+# Subtest: mock purchase, allocation, withdrawal and claims use actual state transitions
+ok 15 - mock purchase, allocation, withdrawal and claims use actual state transitions
+  ---
+  duration_ms: 3.108683
+  type: 'test'
+  ...
+# Subtest: legacy conversion can never make principal or rewards freely saleable
+ok 16 - legacy conversion can never make principal or rewards freely saleable
+  ---
+  duration_ms: 5.916679
+  type: 'test'
+  ...
+# Subtest: restricted borrowing is prohibited even when ordinary borrowing is enabled
+ok 17 - restricted borrowing is prohibited even when ordinary borrowing is enabled
+  ---
+  duration_ms: 0.286073
+  type: 'test'
+  ...
+# Subtest: attack suite distinguishes model passes from external verification
+ok 18 - attack suite distinguishes model passes from external verification
+  ---
+  duration_ms: 11.252801
+  type: 'test'
+  ...
+# Subtest: Monte Carlo is seeded, finite and reports actual depth breaches
+ok 19 - Monte Carlo is seeded, finite and reports actual depth breaches
+  ---
+  duration_ms: 292.259058
+  type: 'test'
+  ...
+# Subtest: a finite reserve with no replenishment cannot be silently restored
+ok 20 - a finite reserve with no replenishment cannot be silently restored
+  ---
+  duration_ms: 7.683966
+  type: 'test'
+  ...
+# Subtest: stress scenario overrides and pain-zone probabilities are coherent
+ok 21 - stress scenario overrides and pain-zone probabilities are coherent
+  ---
+  duration_ms: 34.690723
+  type: 'test'
+  ...
+# Subtest: CSV calibration parses valid orders and rejects invalid data
+ok 22 - CSV calibration parses valid orders and rejects invalid data
+  ---
+  duration_ms: 0.905451
+  type: 'test'
+  ...
+# Subtest: launch readiness remains unverified without real evidence
+ok 23 - launch readiness remains unverified without real evidence
+  ---
+  duration_ms: 21.278875
+  type: 'test'
+  ...
+# (node:4999) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: all application views and interaction pathways render and execute
+ok 24 - all application views and interaction pathways render and execute
+  ---
+  duration_ms: 271.84657
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5317.882756

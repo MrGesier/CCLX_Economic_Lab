@@ -1,0 +1,467 @@
+{
+  "config": {
+    "schemaVersion": "curve-sim/1.0",
+    "preset": "existing_baseline",
+    "mode": "collateral_vault",
+    "projectFinancing": {
+      "enabled": false,
+      "status": "not_implemented",
+      "reason": "Experimental project-financing mode would need deployed capital, NAV, haircuts, delay queues and defaults; controls remain disabled."
+    },
+    "seed": 20260902,
+    "horizonDays": 180,
+    "networkMode": "fixed_network",
+    "priceSource": {
+      "mode": "fixed",
+      "cclxUsd": 0.275,
+      "asOf": "2026-09-02",
+      "origin": "proposed_synthetic",
+      "description": "Fixed illustrative CCLX/USD price source. Do not combine with another active price source."
+    },
+    "totalInitialCapitalCCLX": 300000,
+    "totalInitialParticipants": 300,
+    "totalInitialReserveBudgetCCLX": 5500000,
+    "participants": {
+      "initial": 300,
+      "newPerDay": 0,
+      "budgetPerNewParticipantCCLX": 1000,
+      "activeShare": 0.3,
+      "attritionMonthly": 0.02,
+      "reactivationMonthly": 0.005,
+      "adoptionCap": 5000
+    },
+    "capital": {
+      "medianTicketCCLX": 1000,
+      "dispersion": 0.85,
+      "whaleShare": 0.04,
+      "whaleWealthShare": 0.38,
+      "individualCapCCLX": 250000
+    },
+    "activity": {
+      "actionsPerActiveMonth": 1,
+      "movableFraction": 0.2,
+      "depositProbability": 0.45,
+      "withdrawProbability": 0.18,
+      "migrationProbability": 0.27,
+      "holdProbability": 0.1,
+      "feeElasticity": 1,
+      "slippageElasticity": 1,
+      "maxSlippage": 0.08,
+      "minOrderCCLX": 10,
+      "cooldownDays": 0,
+      "whaleExitDay": null,
+      "whaleExitShare": 0
+    },
+    "demand": {
+      "mode": "behavioral",
+      "noveltyBoost": 0.15,
+      "diversificationPreference": 0.3,
+      "cannibalization": 0.45,
+      "inertia": 0.35,
+      "starProjectDay": null
+    },
+    "fees": {
+      "defaultMintFee": 0.002,
+      "defaultRedemptionFee": 0.002,
+      "routingFee": 0,
+      "subsidyPerActionCCLX": 0,
+      "allocations": {
+        "rewards": 0.25,
+        "reserve": 0.15,
+        "lp": 0.1,
+        "operations": 0.25
+      }
+    },
+    "costs": {
+      "networkDailyUSD": 0,
+      "onboardingUSD": 0,
+      "projectDailyUSD": 0
+    },
+    "pricePath": {
+      "mode": "fixed",
+      "shockDay": null,
+      "shockPct": 0
+    },
+    "restrictedShare": 0,
+    "projectSchedule": [
+      {
+        "day": 0,
+        "targetActiveProjects": 3
+      }
+    ],
+    "scenarios": [
+      "no_flow",
+      "organic_growth",
+      "intense_rebalance",
+      "small_fast_vs_large_slow",
+      "fragmentation_fixed_total",
+      "growth_funded",
+      "whale_exit",
+      "new_project_migration",
+      "capacity_saturation",
+      "fee_elasticity",
+      "cclx_down",
+      "restricted_tokens",
+      "subsidized_rotation",
+      "pipeline_fixed",
+      "pipeline_funded",
+      "too_fast",
+      "too_slow",
+      "star_project",
+      "simultaneous_maturity"
+    ],
+    "demoScenarios": [
+      {
+        "id": "pdf_demo_split",
+        "name": "PDF demo split 10,000 CCLX",
+        "origin": "condensed_v5",
+        "description": "10,000 CCLX split 60% Project A / 40% Project B; real yield and bootstrap reward remain separate demonstration values.",
+        "allocations": [
+          {
+            "projectId": "forest_v5",
+            "amountCCLX": 6000,
+            "realYield": 0.07,
+            "bootstrapReward": 0.042
+          },
+          {
+            "projectId": "industrial_v5",
+            "amountCCLX": 4000,
+            "realYield": 0.038,
+            "bootstrapReward": 0.046
+          }
+        ]
+      }
+    ],
+    "parameterRegister": [
+      {
+        "path": "priceSource.cclxUsd",
+        "unit": "USD/CCLX",
+        "origin": "proposed_synthetic",
+        "domain": "> 0",
+        "description": "Conversion reference used only for indicative USD display and PDF floor-buffer conversion."
+      },
+      {
+        "path": "totalInitialCapitalCCLX",
+        "unit": "CCLX",
+        "origin": "proposed_synthetic",
+        "domain": ">= 0",
+        "description": "Participant wallet capital funded externally at simulation start, separate from project reserves."
+      },
+      {
+        "path": "totalInitialReserveBudgetCCLX",
+        "unit": "CCLX",
+        "origin": "existing_synthetic",
+        "domain": ">= 0",
+        "description": "Initial project curve reserve budget. In fixed_total_resources it is not multiplied by project count."
+      },
+      {
+        "path": "participants.initial",
+        "unit": "participants",
+        "origin": "proposed_synthetic",
+        "domain": "integer >= 0",
+        "description": "Synthetic participant count, not an adoption estimate."
+      },
+      {
+        "path": "activity.actionsPerActiveMonth",
+        "unit": "decisions/active participant/month",
+        "origin": "proposed_synthetic",
+        "domain": ">= 0",
+        "description": "Action frequency. Distinct from vault turnover and market velocity."
+      },
+      {
+        "path": "activity.movableFraction",
+        "unit": "share of wallet or position",
+        "origin": "proposed_synthetic",
+        "domain": "0..1",
+        "description": "Maximum fraction moved by a participant in one decision."
+      },
+      {
+        "path": "activity.feeElasticity",
+        "unit": "dimensionless",
+        "origin": "proposed_synthetic",
+        "domain": ">= 0",
+        "description": "Behavioral demand intensity multiplier exp(-epsilon * relative cost)."
+      },
+      {
+        "path": "fees.defaultMintFee",
+        "unit": "fraction of gross deposit",
+        "origin": "existing_synthetic/proposed_synthetic",
+        "domain": "0..1",
+        "description": "Curve entry fee before per-project overrides."
+      },
+      {
+        "path": "fees.defaultRedemptionFee",
+        "unit": "fraction of gross redemption",
+        "origin": "existing_synthetic/proposed_synthetic",
+        "domain": "0..1",
+        "description": "Curve exit fee before per-project overrides."
+      },
+      {
+        "path": "fees.routingFee",
+        "unit": "fraction of migration proceeds",
+        "origin": "proposed_synthetic",
+        "domain": "0..1",
+        "description": "Optional migration routing fee, disabled by default."
+      },
+      {
+        "path": "project.curve.family",
+        "unit": "enum",
+        "origin": "existing_synthetic/proposed_synthetic",
+        "domain": "linear|power|piecewise|milestone_steps",
+        "description": "Bonding-curve family. Milestone presets are not claimed to reproduce the PDF unless piecewise steps are selected."
+      }
+    ],
+    "projects": [
+      {
+        "id": "forest",
+        "name": "Forest Restoration A",
+        "type": "Carbon Forward",
+        "origin": "existing_synthetic",
+        "documentStatus": "Code baseline: collateral vault receipt, not a project-financing right.",
+        "createdDay": 0,
+        "openDay": 0,
+        "fundraisingEndDay": 120,
+        "operatingDay": 0,
+        "maturityDay": 1095,
+        "closeDay": null,
+        "defaultDay": null,
+        "floorBuffer": {
+          "value": 1800000,
+          "currency": "CCLX",
+          "source": "existing_synthetic",
+          "origin": "existing_synthetic",
+          "description": "Existing code collateral reserve."
+        },
+        "capacityCCLX": 5000000,
+        "attractiveness": 1.05,
+        "quality": 1.05,
+        "whalePreference": 1.15,
+        "curve": {
+          "family": "linear",
+          "a": 0.9,
+          "b": 1.2e-7,
+          "initialPrice": 0.9,
+          "priceAtCapacity": 1.5,
+          "capacity": 5000000,
+          "origin": "existing_synthetic"
+        },
+        "fees": {
+          "mintFee": 0.002,
+          "redemptionFee": 0.002,
+          "origin": "existing_synthetic"
+        },
+        "costs": {
+          "onboardingUSD": 0,
+          "dailyUSD": 60.273972602739725,
+          "origin": "existing_synthetic"
+        },
+        "externalFees": {
+          "annualProtocolFeesUSD": 95000,
+          "classification": "external_only",
+          "origin": "existing_synthetic"
+        }
+      },
+      {
+        "id": "solar",
+        "name": "Solar Water Access",
+        "type": "Green Debt",
+        "origin": "existing_synthetic",
+        "documentStatus": "Code baseline: collateral vault receipt, not a project-financing right.",
+        "createdDay": 0,
+        "openDay": 0,
+        "fundraisingEndDay": 120,
+        "operatingDay": 0,
+        "maturityDay": 1185,
+        "closeDay": null,
+        "defaultDay": null,
+        "floorBuffer": {
+          "value": 2600000,
+          "currency": "CCLX",
+          "source": "existing_synthetic",
+          "origin": "existing_synthetic",
+          "description": "Existing code collateral reserve."
+        },
+        "capacityCCLX": 6000000,
+        "attractiveness": 1.1,
+        "quality": 1.1,
+        "whalePreference": 1,
+        "curve": {
+          "family": "linear",
+          "a": 1,
+          "b": 8e-8,
+          "initialPrice": 1,
+          "priceAtCapacity": 1.48,
+          "capacity": 6000000,
+          "origin": "existing_synthetic"
+        },
+        "fees": {
+          "mintFee": 0.002,
+          "redemptionFee": 0.002,
+          "origin": "existing_synthetic"
+        },
+        "costs": {
+          "onboardingUSD": 0,
+          "dailyUSD": 84.93150684931507,
+          "origin": "existing_synthetic"
+        },
+        "externalFees": {
+          "annualProtocolFeesUSD": 128000,
+          "classification": "external_only",
+          "origin": "existing_synthetic"
+        }
+      },
+      {
+        "id": "mangrove",
+        "name": "Mangrove Delta",
+        "type": "Carbon Forward",
+        "origin": "existing_synthetic",
+        "documentStatus": "Code baseline: collateral vault receipt, not a project-financing right.",
+        "createdDay": 0,
+        "openDay": 0,
+        "fundraisingEndDay": 120,
+        "operatingDay": 0,
+        "maturityDay": 1275,
+        "closeDay": null,
+        "defaultDay": null,
+        "floorBuffer": {
+          "value": 1100000,
+          "currency": "CCLX",
+          "source": "existing_synthetic",
+          "origin": "existing_synthetic",
+          "description": "Existing code collateral reserve."
+        },
+        "capacityCCLX": 4000000,
+        "attractiveness": 0.9,
+        "quality": 0.9,
+        "whalePreference": 1,
+        "curve": {
+          "family": "linear",
+          "a": 0.8,
+          "b": 1.5e-7,
+          "initialPrice": 0.8,
+          "priceAtCapacity": 1.4,
+          "capacity": 4000000,
+          "origin": "existing_synthetic"
+        },
+        "fees": {
+          "mintFee": 0.002,
+          "redemptionFee": 0.002,
+          "origin": "existing_synthetic"
+        },
+        "costs": {
+          "onboardingUSD": 0,
+          "dailyUSD": 49.31506849315068,
+          "origin": "existing_synthetic"
+        },
+        "externalFees": {
+          "annualProtocolFeesUSD": 45000,
+          "classification": "external_only",
+          "origin": "existing_synthetic"
+        }
+      }
+    ]
+  },
+  "summary": {
+    "cumulativeFeesCCLX": 122.53507289877113,
+    "indicativeFeesUSD": 33.69714504716205,
+    "netProtocolResultUSD": -35174.522033034984,
+    "averageDailyFeesCCLX": 0.6769893530318847,
+    "averageMonthlyFeesCCLX": 20.42251214979519,
+    "takeRate": 1,
+    "feesPerActiveParticipantCCLX": 0.40845024299590377,
+    "reserveAverageCCLX": 5527918.992050762,
+    "reserveFinalCCLX": 5551655.399324342,
+    "actionFrequencyMonthly": 0.2561111111111111,
+    "vaultTurnover": 0.011082573059261261,
+    "migrationRate": 0.0003584001142404787,
+    "rejectedDemandRate": 0.01072961373390558,
+    "partialOrderRate": 0,
+    "p50Slippage": 0.000002413997948647051,
+    "p95WithdrawalSlippage": 0.00000479936902015865,
+    "p95RoundTripCost": 0.003988039872414661,
+    "participantsFinal": 300,
+    "activeParticipantsAverage": 300,
+    "retention90d": 0.49666666666666665,
+    "capitalNewCCLX": 54536.779074474034,
+    "capitalRecycledCCLX": 1981.2067982631052,
+    "feeConcentrationTopProject": 0.4545878193492774,
+    "accountingResidualCCLX": -1.862645149230957e-9,
+    "receiptResidual": 1.3969838619232178e-9,
+    "valid": true
+  },
+  "feeAccounts": {
+    "CCLX": {
+      "grossUserFees": 122.53507289877113,
+      "rebates": 0,
+      "netCollected": 122.53507289877113,
+      "treasury": 30.633768224692783,
+      "rewards": 30.633768224692783,
+      "reserve": 18.38026093481568,
+      "lp": 12.253507289877106,
+      "operations": 30.633768224692783,
+      "restrictedPending": 3.3404098158544597
+    },
+    "USD": {
+      "indicativeAtCollection": 33.69714504716205,
+      "realizedCash": 0,
+      "saleFees": 0,
+      "remainingValue": 33.69714504716205
+    },
+    "byProject": {
+      "solar": {
+        "gross": 35.080946807431744,
+        "net": 35.080946807431744,
+        "entry": 32.684685399869224,
+        "exit": 2.3962614075625313,
+        "routing": 0,
+        "rebates": 0,
+        "restricted": 1.1541983355034409,
+        "unrestricted": 33.92674847192829
+      },
+      "mangrove": {
+        "gross": 31.751174508482286,
+        "net": 31.751174508482286,
+        "entry": 29.502373560063614,
+        "exit": 2.248800948418677,
+        "routing": 0,
+        "rebates": 0,
+        "restricted": 1.6554937203162283,
+        "unrestricted": 30.095680788166057
+      },
+      "forest": {
+        "gross": 55.70295158285711,
+        "net": 55.70295158285711,
+        "entry": 50.84891278554143,
+        "exit": 4.854038797315676,
+        "routing": 0,
+        "rebates": 0,
+        "restricted": 0.5307177600347903,
+        "unrestricted": 55.17223382282232
+      }
+    },
+    "byProfile": {
+      "rebalancer": 36.504225044589106,
+      "long_term": 21.148928988258668,
+      "active_user": 21.97330119285525,
+      "restricted_user": 3.819613527086959,
+      "whale": 39.089004145981185
+    },
+    "bySource": {
+      "unrestricted": 119.19466308291669,
+      "restricted": 3.3404098158544597
+    },
+    "byOperation": {
+      "entry": 113.03597174547424,
+      "exit": 9.499101153296884,
+      "routing": 0,
+      "rebate": 0
+    },
+    "realizedTakeRate": 1,
+    "allocationCheck": 122.53507289877115,
+    "restrictedLiquidValueCCLX": 3.3404098158544597
+  },
+  "warnings": [
+    "Experimental project-financing mode would need deployed capital, NAV, haircuts, delay queues and defaults; controls remain disabled.",
+    "Baseline mode is collateral vault: receipts are reserve claims, not project-financing rights."
+  ]
+}

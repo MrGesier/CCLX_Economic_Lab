@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "curve-sim/1.0",
+  "preset": "condensed_v5",
+  "seed": 20260902,
+  "horizonDays": 1095,
+  "networkMode": "fixed_total_resources",
+  "totalInitialCapitalCCLX": 10000000,
+  "totalInitialParticipants": 1000,
+  "projectSchedule": [
+    {"day": 0, "targetActiveProjects": 2},
+    {"day": 180, "targetActiveProjects": 3},
+    {"day": 365, "targetActiveProjects": 5},
+    {"day": 730, "targetActiveProjects": 10}
+  ],
+  "projectFunding": {"floorSource": "shared_fixed_budget", "onboardingCostUSD": 0},
+  "demand": {"mode": "behavioral", "feeElasticity": 1.0, "noveltyBoost": 0.15},
+  "activity": {"activeShare": 0.30, "actionsPerActiveMonth": 1.0, "movableFraction": 0.20},
+  "notes": [
+    "Values not sourced from the client-discussion PDF are proposed_synthetic in the normalized application config.",
+    "USD floor buffers require explicit CCLX/USD conversion metadata before simulation."
+  ]
+}

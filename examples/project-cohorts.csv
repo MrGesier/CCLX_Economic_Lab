@@ -1,0 +1,4 @@
+project_id,project_type,created_day,open_day,maturity_day,floor_value,floor_currency,floor_source,slope,mint_fee,redemption_fee,reward_multiplier,capacity_cclx,cooldown_days,origin
+forest_01,forest,0,30,1095,1000000,USD,external,0.85,0.010,0.020,1.25,,30,condensed_v5
+industrial_01,industrial,180,240,1335,2000000,USD,external,1.15,0.015,0.025,1.50,,30,condensed_v5
+mangrove_01,mangrove,365,425,1520,750000,USD,external,0.65,0.008,0.018,1.10,,30,condensed_v5

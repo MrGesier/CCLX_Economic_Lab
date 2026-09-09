@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "curve-optimizer/1.0",
+  "baseConfig": "curve-network-growth.json",
+  "selectionSeeds": [101, 102, 103, 104, 105],
+  "validationSeeds": [901, 902, 903],
+  "budget": 500,
+  "searchSpace": {
+    "initialProjects": {"type": "integer", "values": [2, 3, 5]},
+    "targetProjects": {"type": "integer", "values": [3, 5, 10]},
+    "launchIntervalDays": {"type": "integer", "min": 30, "max": 365},
+    "minDemandBeforeLaunchCCLX": {"type": "number", "min": 0, "max": 1000000},
+    "mintFee": {"type": "number", "min": 0, "max": 0.03},
+    "redemptionFee": {"type": "number", "min": 0, "max": 0.05},
+    "slopeScale": {"type": "number", "min": 0.5, "max": 2.0},
+    "cooldownDays": {"type": "integer", "values": [0, 7, 30, 90]}
+  },
+  "objectives": ["maximize:netProtocolResult", "maximize:retention90d", "minimize:p95RoundTripCost"],
+  "constraints": [
+    "p95WithdrawalSlippage <= 0.05",
+    "rejectedDemandRate <= 0.10",
+    "medianProjectUtilization >= 0.20",
+    "accountingResidualCCLX == 0"
+  ],
+  "notes": "Demonstration search bounds only; not a CCLX recommendation."
+}

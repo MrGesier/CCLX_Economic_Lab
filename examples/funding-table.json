@@ -1,0 +1,72 @@
+[
+  {
+    "id": "strategic",
+    "name": "Strategic",
+    "tokens": 6000000,
+    "price": 0.075,
+    "cliff": 12,
+    "linear": 30,
+    "tge": 0,
+    "sellRate": 0.35,
+    "fdv": 15000000,
+    "raised": 450000,
+    "share": 0.03,
+    "discount": 0.7272727272727273
+  },
+  {
+    "id": "private1",
+    "name": "Private 1",
+    "tokens": 8000000,
+    "price": 0.11,
+    "cliff": 9,
+    "linear": 27,
+    "tge": 0,
+    "sellRate": 0.35,
+    "fdv": 22000000,
+    "raised": 880000,
+    "share": 0.04,
+    "discount": 0.6000000000000001
+  },
+  {
+    "id": "private2",
+    "name": "Private 2",
+    "tokens": 10000000,
+    "price": 0.15,
+    "cliff": 6,
+    "linear": 18,
+    "tge": 0,
+    "sellRate": 0.35,
+    "fdv": 30000000,
+    "raised": 1500000,
+    "share": 0.05,
+    "discount": 0.4545454545454546
+  },
+  {
+    "id": "private3",
+    "name": "Private 3",
+    "tokens": 10000000,
+    "price": 0.21,
+    "cliff": 3,
+    "linear": 15,
+    "tge": 0,
+    "sellRate": 0.35,
+    "fdv": 42000000,
+    "raised": 2100000,
+    "share": 0.05,
+    "discount": 0.23636363636363644
+  },
+  {
+    "id": "public",
+    "name": "Public sale",
+    "tokens": 10000000,
+    "price": 0.275,
+    "cliff": 0,
+    "linear": 6,
+    "tge": 0.5,
+    "sellRate": 0.25,
+    "fdv": 55000000.00000001,
+    "raised": 2750000,
+    "share": 0.05,
+    "discount": 0
+  }
+]

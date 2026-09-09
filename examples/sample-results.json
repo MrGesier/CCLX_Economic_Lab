@@ -1,0 +1,545 @@
+{
+  "version": "1.1.0",
+  "launch": {
+    "audit": {
+      "budget": 1500000,
+      "assignedQuote": 1500000,
+      "inventory": 8000000,
+      "inventoryValue": 2200000,
+      "unallocatedCash": 0,
+      "within2": 606030.3038033001,
+      "bands": [
+        {
+          "bps": 25,
+          "cex": 90000,
+          "dex": 750.4693368545268,
+          "total": 90750.46933685453,
+          "baseQty": 330833.57856900035
+        },
+        {
+          "bps": 50,
+          "cex": 190000,
+          "dex": 1501.879702199949,
+          "total": 191501.87970219995,
+          "baseQty": 699048.2020011792
+        },
+        {
+          "bps": 100,
+          "cex": 350000,
+          "dex": 3007.5377360280836,
+          "total": 353007.5377360281,
+          "baseQty": 1292276.4458101983
+        },
+        {
+          "bps": 200,
+          "cex": 600000,
+          "dex": 6030.303803300136,
+          "total": 606030.3038033001,
+          "baseQty": 2228664.6160446764
+        },
+        {
+          "bps": 500,
+          "cex": 780000,
+          "dex": 15192.339311462245,
+          "total": 795192.3393114622,
+          "baseQty": 2952292.764773265
+        },
+        {
+          "bps": 1000,
+          "cex": 900000,
+          "dex": 30790.021169691696,
+          "total": 930790.0211696917,
+          "baseQty": 3498665.899143345
+        }
+      ],
+      "sell": {
+        "filled": 100000,
+        "quote": 27403.856109020875,
+        "unfilled": 0,
+        "cex": 27254.151260856797,
+        "dex": 149.7048481640774,
+        "average": 0.27403856109020874,
+        "slippage": 0.0034961414901500953
+      },
+      "buy": {
+        "tokens": 99651.00528839264,
+        "spent": 27500.000000000004,
+        "unfilled": 0,
+        "cex": 99113.34146756261,
+        "dex": 537.6638208300261,
+        "average": 0.2759630966131679,
+        "slippage": 0.0035021695024286537
+      },
+      "checks": [
+        {
+          "name": "Quote capital is fully funded",
+          "pass": true,
+          "detail": "$1500000 assigned / $1500000 authorized"
+        },
+        {
+          "name": "DEX reference price reconciles",
+          "pass": true,
+          "detail": "DEX spot $0.2750 vs $0.275"
+        },
+        {
+          "name": "MM token inventory is allocated",
+          "pass": true,
+          "detail": "8000000 / 16000000 CCLX"
+        },
+        {
+          "name": "Initial float is bounded by the maximum supply",
+          "pass": true,
+          "detail": "Working initial float 16000000 CCLX; includes MM inventory, not extra supply"
+        },
+        {
+          "name": "2% bid-depth target",
+          "pass": true,
+          "detail": "$606030 / $600000"
+        },
+        {
+          "name": "Reference sell slippage",
+          "pass": true,
+          "detail": "0.35% / 1.00% target"
+        },
+        {
+          "name": "Reference buy slippage",
+          "pass": true,
+          "detail": "0.35% / 1.00% target"
+        }
+      ],
+      "pass": true,
+      "capacity": [
+        {
+          "slippage": 0.005,
+          "sell": {
+            "input": 721018.4336806628,
+            "notional": 198280.06926218228,
+            "output": 197288.66891651813,
+            "slippage": 0.004999999996738169
+          },
+          "buy": {
+            "input": 321019.8956912791,
+            "notional": 321019.8956912791,
+            "output": 1161537.3883015781,
+            "slippage": 0.004999999998216653
+          }
+        },
+        {
+          "slippage": 0.01,
+          "sell": {
+            "input": 1790499.0371376206,
+            "notional": 492387.2352128457,
+            "output": 487463.36286226736,
+            "slippage": 0.00999999999685186
+          },
+          "buy": {
+            "input": 890654.1742908303,
+            "notional": 890654.1742908303,
+            "output": 3206675.6950317593,
+            "slippage": 0.009999999995190745
+          }
+        },
+        {
+          "slippage": 0.02,
+          "sell": {
+            "input": 2807781.3177581206,
+            "notional": 772139.8623834832,
+            "output": 756697.065137201,
+            "slippage": 0.019999999998203122
+          },
+          "buy": {
+            "input": 1468134.113929409,
+            "notional": 1468134.113929409,
+            "output": 5233989.711063603,
+            "slippage": 0.019999999983373318
+          }
+        },
+        {
+          "slippage": 0.05,
+          "sell": {
+            "input": 3840811.5091442605,
+            "notional": 1056223.1650146716,
+            "output": 1003412.0068269498,
+            "slippage": 0.04999999994034243
+          },
+          "buy": {
+            "input": 1821268.4798709233,
+            "notional": 1821268.4798709233,
+            "output": 6307423.307750356,
+            "slippage": 0.04999999986048631
+          }
+        },
+        {
+          "slippage": 0.1,
+          "sell": {
+            "input": 4406765.971692618,
+            "notional": 1211860.64221547,
+            "output": 1090674.5780963732,
+            "slippage": 0.09999999991546049
+          },
+          "buy": {
+            "input": 2005752.5528136466,
+            "notional": 2005752.5528136466,
+            "output": 6630586.952082591,
+            "slippage": 0.09999999989506625
+          }
+        }
+      ],
+      "disclaimer": "Synthetic CEX ladder and constant-product AMM. Depth is executable only within the stated assumptions; MM inventory value is not additional cash."
+    },
+    "sizing": {
+      "feasible": true,
+      "requiredBudget": 1485074.251818787,
+      "requiredCexQuote": 891044.5510912723,
+      "requiredDexQuote": 594029.7007275149,
+      "requiredTokens": 7920396.009700198,
+      "scale": 0.9900495012125248,
+      "withinAllocation": true,
+      "checks": [
+        {
+          "name": "Quote capital is fully funded",
+          "pass": true,
+          "detail": "$1485074.2518187873 assigned / $1485074.251818787 authorized"
+        },
+        {
+          "name": "DEX reference price reconciles",
+          "pass": true,
+          "detail": "DEX spot $0.2750 vs $0.275"
+        },
+        {
+          "name": "MM token inventory is allocated",
+          "pass": true,
+          "detail": "7920396 / 16000000 CCLX"
+        },
+        {
+          "name": "Initial float is bounded by the maximum supply",
+          "pass": true,
+          "detail": "Working initial float 15920396 CCLX; includes MM inventory, not extra supply"
+        },
+        {
+          "name": "2% bid-depth target",
+          "pass": true,
+          "detail": "$600000 / $600000"
+        },
+        {
+          "name": "Reference sell slippage",
+          "pass": true,
+          "detail": "0.35% / 1.00% target"
+        },
+        {
+          "name": "Reference buy slippage",
+          "pass": true,
+          "detail": "0.35% / 1.00% target"
+        }
+      ]
+    }
+  },
+  "base": {
+    "meta": {
+      "paths": 100,
+      "months": 36,
+      "seed": 20260907,
+      "model": "Synthetic correlated GBM + jumps + finite external arbitrage inventory + cash-limited market execution. Monthly, not tick-level; no calibrated live market data."
+    },
+    "summary": {
+      "terminalPrice": {
+        "p05": 0.00432673080275221,
+        "p50": 0.07191625425256679,
+        "p95": 0.5966438661910993,
+        "mean": 0.24369552952352777
+      },
+      "maxDrawdown": {
+        "p05": 0.594262728777128,
+        "p50": 0.890244998742888,
+        "p95": 0.9862308136747578,
+        "mean": 0.8462100665391722
+      },
+      "minDepth": {
+        "p05": 615.4907696638631,
+        "p50": 1291.9399767727955,
+        "p95": 3354.8253982769256,
+        "mean": 7080.005979506275
+      },
+      "minCoverage": {
+        "p05": 0.00009426266398025136,
+        "p50": 0.0019524998310757947,
+        "p95": 0.06646889966796694,
+        "mean": 0.17308183272558553
+      },
+      "liquidityReserve": {
+        "p05": 0,
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "riskReserve": {
+        "p05": 441927.0049679515,
+        "p50": 502432.58572946803,
+        "p95": 502671.3227767299,
+        "mean": 494463.5530586114
+      },
+      "realYield": {
+        "p05": 117500.9299700888,
+        "p50": 204882.07956982666,
+        "p95": 209041.21275318565,
+        "mean": 187490.4871364558
+      },
+      "rewards": {
+        "p05": 3450678.1513320412,
+        "p50": 3450678.1513320412,
+        "p95": 3450678.1513320412,
+        "mean": 3450678.1513320394
+      },
+      "restrictedRewards": {
+        "p05": 899576.1971282052,
+        "p50": 899576.1971282052,
+        "p95": 899576.1971282052,
+        "mean": 899576.1971282061
+      },
+      "defaults": {
+        "p05": 0,
+        "p50": 0,
+        "p95": 2,
+        "mean": 0.48
+      },
+      "uncoveredLoss": {
+        "p05": 0,
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "worstSlippage": {
+        "p05": 0.04414793179085859,
+        "p50": 0.19999999964753085,
+        "p95": 0.1999999999718549,
+        "mean": 0.17302673340828928
+      },
+      "maxQueue": {
+        "p05": 0.00798960579559207,
+        "p50": 4134747.74516266,
+        "p95": 6202436.437470432,
+        "mean": 3263874.9513179488
+      },
+      "liquidityConsumed": {
+        "p05": 289166.97665669624,
+        "p50": 318294.0265232756,
+        "p95": 319680.404251062,
+        "mean": 312496.8290454853
+      },
+      "lossProbability": 0.82,
+      "depthBreachProbability": 0.98,
+      "reserveExhaustionProbability": 1
+    }
+  },
+  "combinedCrisis": {
+    "meta": {
+      "paths": 100,
+      "months": 36,
+      "seed": 20260907,
+      "model": "Synthetic correlated GBM + jumps + finite external arbitrage inventory + cash-limited market execution. Monthly, not tick-level; no calibrated live market data."
+    },
+    "summary": {
+      "terminalPrice": {
+        "p05": 0.00014452875063600948,
+        "p50": 0.0038415362203674253,
+        "p95": 0.09818999337852553,
+        "mean": 0.2272088898097844
+      },
+      "maxDrawdown": {
+        "p05": 0.9016179455225481,
+        "p50": 0.9919185363840793,
+        "p95": 0.9995701118111974,
+        "mean": 0.9753713257567624
+      },
+      "minDepth": {
+        "p05": 0,
+        "p50": 303.19635367223395,
+        "p95": 1291.8303472144544,
+        "mean": 2070.426426780448
+      },
+      "minCoverage": {
+        "p05": 0,
+        "p50": 0.0009658699909174963,
+        "p95": 0.07823254667771656,
+        "mean": 0.11024833071992894
+      },
+      "liquidityReserve": {
+        "p05": 0,
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "riskReserve": {
+        "p05": 423171.92443847266,
+        "p50": 447970.1856833183,
+        "p95": 502514.21997898066,
+        "mean": 456140.2262711516
+      },
+      "realYield": {
+        "p05": 41559.816046091946,
+        "p50": 84773.0390223987,
+        "p95": 112867.3107982087,
+        "mean": 81639.71263552467
+      },
+      "rewards": {
+        "p05": 3450678.1513320412,
+        "p50": 3450678.1513320412,
+        "p95": 3450678.1513320412,
+        "mean": 3450678.1513320394
+      },
+      "restrictedRewards": {
+        "p05": 899576.1971282052,
+        "p50": 899576.1971282052,
+        "p95": 899576.1971282052,
+        "mean": 899576.1971282061
+      },
+      "defaults": {
+        "p05": 0,
+        "p50": 2,
+        "p95": 3,
+        "mean": 1.85
+      },
+      "uncoveredLoss": {
+        "p05": 0,
+        "p50": 0,
+        "p95": 0,
+        "mean": 0
+      },
+      "worstSlippage": {
+        "p05": 0.12922738492698835,
+        "p50": 0.1999999997562809,
+        "p95": 0.1999999999846296,
+        "mean": 0.18944550869623214
+      },
+      "maxQueue": {
+        "p05": 0.01857367171905935,
+        "p50": 9215262.853146933,
+        "p95": 16663533.745251073,
+        "mean": 8189639.770532897
+      },
+      "liquidityConsumed": {
+        "p05": 263853.272015364,
+        "p50": 278257.67967413284,
+        "p95": 287622.4369327363,
+        "mean": 277213.2375451748
+      },
+      "lossProbability": 0.98,
+      "depthBreachProbability": 0.98,
+      "reserveExhaustionProbability": 1
+    }
+  },
+  "attacks": {
+    "passed": 15,
+    "failed": 0,
+    "unverified": 4
+  },
+  "readiness": {
+    "checks": [
+      {
+        "category": "Liquidity",
+        "name": "Quote capital is fully funded",
+        "pass": true,
+        "detail": "$1500000 assigned / $1500000 authorized"
+      },
+      {
+        "category": "Liquidity",
+        "name": "DEX reference price reconciles",
+        "pass": true,
+        "detail": "DEX spot $0.2750 vs $0.275"
+      },
+      {
+        "category": "Liquidity",
+        "name": "MM token inventory is allocated",
+        "pass": true,
+        "detail": "8000000 / 16000000 CCLX"
+      },
+      {
+        "category": "Liquidity",
+        "name": "Initial float is bounded by the maximum supply",
+        "pass": true,
+        "detail": "Working initial float 16000000 CCLX; includes MM inventory, not extra supply"
+      },
+      {
+        "category": "Liquidity",
+        "name": "2% bid-depth target",
+        "pass": true,
+        "detail": "$606030 / $600000"
+      },
+      {
+        "category": "Liquidity",
+        "name": "Reference sell slippage",
+        "pass": true,
+        "detail": "0.35% / 1.00% target"
+      },
+      {
+        "category": "Liquidity",
+        "name": "Reference buy slippage",
+        "pass": true,
+        "detail": "0.35% / 1.00% target"
+      },
+      {
+        "category": "Tokenomics",
+        "name": "Supply / allocations / emissions reconcile",
+        "pass": true,
+        "detail": "All working supply constraints reconcile."
+      },
+      {
+        "category": "Tokenomics",
+        "name": "Bridge has no free-sale release",
+        "pass": true,
+        "detail": "Restricted and unissued balances excluded from sale pressure."
+      },
+      {
+        "category": "Risk",
+        "name": "Live market depth independently verified",
+        "pass": false,
+        "detail": "No authenticated live market snapshot or executable MM mandate provided.",
+        "status": "unverified"
+      },
+      {
+        "category": "Risk",
+        "name": "Smart contracts independently audited",
+        "pass": false,
+        "detail": "No deployed contracts or independent security audit provided.",
+        "status": "unverified"
+      },
+      {
+        "category": "Legal",
+        "name": "Instrument, reward and redemption rights approved",
+        "pass": false,
+        "detail": "Legal, regulatory and contractual analysis is outside the model.",
+        "status": "unverified"
+      },
+      {
+        "category": "Treasury",
+        "name": "Project cash flow and reserve evidence verified",
+        "pass": false,
+        "detail": "All current project revenue, expenses, reserves and default inputs are placeholders.",
+        "status": "unverified"
+      },
+      {
+        "category": "Stress",
+        "name": "Depth coverage meets target in 95% of paths",
+        "pass": false,
+        "detail": "Breach probability 98.0%."
+      },
+      {
+        "category": "Stress",
+        "name": "Dedicated liquidity reserve survives stress",
+        "pass": false,
+        "detail": "Exhaustion probability 100.0%."
+      },
+      {
+        "category": "Security",
+        "name": "Model exploit checks pass",
+        "pass": true,
+        "detail": "15 passed, 0 failed, 4 not verified."
+      }
+    ],
+    "passed": 10,
+    "failed": 2,
+    "unverified": 4,
+    "ready": false,
+    "message": "A model-only pass cannot establish investment, legal, contract-security or production launch readiness."
+  }
+}

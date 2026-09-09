@@ -1,0 +1,22 @@
+CCLX Economic Lab - lancement Windows
+
+1. Extraire TOUT le ZIP sur votre Bureau.
+2. Ouvrir le dossier CCLX_Economic_Lab extrait.
+3. Double-cliquer sur DEMARRER_CCLX.cmd.
+
+Le navigateur s'ouvre automatiquement une fois le serveur pret.
+Garder la fenetre du lanceur ouverte pendant l'utilisation.
+Fermer cette fenetre pour arreter le serveur.
+Un port libre est choisi automatiquement : utiliser l'adresse affichee,
+pas une ancienne adresse localhost:3000.
+
+Le lanceur .cmd n'est pas un executable .exe autonome.
+Il utilise Node.js deja installe sur votre PC (version 20 ou superieure).
+Aucune installation npm ni cle API necessaire.
+Ne pas lancer depuis l'interieur du ZIP sans l'extraire.
+
+Le serveur et les tests ont ete verifies sous Linux.
+Le double-clic Windows et l'ouverture du navigateur n'ont pas pu etre
+testes sur un PC Windows dans cet environnement.
+
+Le modele utilise des donnees fictives. Voir README.md pour ses limites.

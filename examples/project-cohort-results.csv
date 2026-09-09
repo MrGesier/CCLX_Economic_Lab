@@ -1,0 +1,2 @@
+run_id,seed,project_id,project_type,created_day,open_day,maturity_day,launch_cost_usd,floor_funded_cclx,external_inflows_cclx,migrations_received_cclx,new_capital_cclx,average_reserve_cclx,final_reserve_cclx,unique_users,fees_cclx,net_result_usd,time_to_fill_days,break_even_day,final_status,failure_reason
+example_placeholder,20260902,forest_01,forest,0,30,1095,0,,,,,,,,,,,,pending_run,

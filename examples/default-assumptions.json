@@ -1,0 +1,313 @@
+{
+  "supply": 200000000,
+  "launchPrice": 0.275,
+  "rounds": [
+    {
+      "id": "strategic",
+      "name": "Strategic",
+      "tokens": 6000000,
+      "price": 0.075,
+      "cliff": 12,
+      "linear": 30,
+      "tge": 0,
+      "sellRate": 0.35
+    },
+    {
+      "id": "private1",
+      "name": "Private 1",
+      "tokens": 8000000,
+      "price": 0.11,
+      "cliff": 9,
+      "linear": 27,
+      "tge": 0,
+      "sellRate": 0.35
+    },
+    {
+      "id": "private2",
+      "name": "Private 2",
+      "tokens": 10000000,
+      "price": 0.15,
+      "cliff": 6,
+      "linear": 18,
+      "tge": 0,
+      "sellRate": 0.35
+    },
+    {
+      "id": "private3",
+      "name": "Private 3",
+      "tokens": 10000000,
+      "price": 0.21,
+      "cliff": 3,
+      "linear": 15,
+      "tge": 0,
+      "sellRate": 0.35
+    },
+    {
+      "id": "public",
+      "name": "Public sale",
+      "tokens": 10000000,
+      "price": 0.275,
+      "cliff": 0,
+      "linear": 6,
+      "tge": 0.5,
+      "sellRate": 0.25
+    }
+  ],
+  "allocations": [
+    {
+      "id": "sales",
+      "name": "Token sales",
+      "tokens": 44000000,
+      "color": "#5875b5"
+    },
+    {
+      "id": "team",
+      "name": "Team & founders",
+      "tokens": 36000000,
+      "color": "#a47d5b"
+    },
+    {
+      "id": "ecosystem",
+      "name": "Ecosystem / projects",
+      "tokens": 32000000,
+      "color": "#658f7b"
+    },
+    {
+      "id": "rewards",
+      "name": "Staking & quality rewards",
+      "tokens": 26000000,
+      "color": "#8d7cae"
+    },
+    {
+      "id": "treasury",
+      "name": "Treasury & risk",
+      "tokens": 26000000,
+      "color": "#78909a"
+    },
+    {
+      "id": "liquidity",
+      "name": "Liquidity / MM",
+      "tokens": 16000000,
+      "color": "#5b9a9a"
+    },
+    {
+      "id": "foundation",
+      "name": "Foundation / community",
+      "tokens": 12000000,
+      "color": "#b19967"
+    },
+    {
+      "id": "advisors",
+      "name": "Advisors / partners",
+      "tokens": 8000000,
+      "color": "#a1a7ad"
+    }
+  ],
+  "rewardBudget": [
+    5000000,
+    4500000,
+    4000000,
+    3500000,
+    3000000,
+    2500000,
+    2000000,
+    1500000
+  ],
+  "bridge": {
+    "internalCap": 12000000,
+    "valuationCap": 3300000,
+    "eligibleSupply": 900000000,
+    "registered": 900000000,
+    "claimed": 0,
+    "referencePrice": 0.275,
+    "cliff": 12,
+    "linear": 24,
+    "claimWindow": 180,
+    "perEntityCap": 0.15,
+    "assumedTakeup": 0.75,
+    "frozen": true
+  },
+  "liquidity": {
+    "budget": 1500000,
+    "cexQuote": 900000,
+    "dexQuote": 600000,
+    "cexTokens": 5818181.818181818,
+    "dexTokens": 2181818.1818181816,
+    "cexDepth": [
+      90000,
+      190000,
+      350000,
+      480000,
+      600000,
+      780000,
+      900000
+    ],
+    "levels": [
+      25,
+      50,
+      100,
+      150,
+      200,
+      500,
+      1000
+    ],
+    "spreadBps": 20,
+    "dexFee": 0.003,
+    "cexFee": 0.001,
+    "depthTarget": 600000,
+    "tradeTarget": 100000,
+    "slippageTarget": 0.01,
+    "coverageTarget": 1.2
+  },
+  "stress": {
+    "months": 36,
+    "paths": 100,
+    "seed": 20260907,
+    "annualDrift": 0.05,
+    "annualVol": 0.85,
+    "marketFactorVol": 0.55,
+    "marketBeta": 0.8,
+    "jumpProbability": 0.025,
+    "jumpMean": -0.22,
+    "jumpVol": 0.12,
+    "shockMonth": 12,
+    "shockSize": 0,
+    "revenueGrowth": 0.08,
+    "revenueVol": 0.25,
+    "revenueMarketCorrelation": 0.25,
+    "projectCorrelation": 0.3,
+    "projectDefaultMultiplier": 1,
+    "organicSellRate": 0.003,
+    "organicBuyRate": 0.003,
+    "unlockSellRate": 0.35,
+    "rewardSellRate": 0.65,
+    "mmShock": 0,
+    "mmWithdrawal": 0,
+    "mmReplenishment": 0.15,
+    "liquidityReserve": 250000,
+    "liquidityTopup": 0,
+    "externalArbCash": 500000,
+    "externalArbTokens": 2000000,
+    "reserveRisk": 500000,
+    "cashBuffer": 250000,
+    "impactFeedback": 0.35,
+    "maxExecutionSlippage": 0.2,
+    "queueDecay": 0.1,
+    "stakingParticipation": 0.38,
+    "bootstrapTargetAPR": 0.08,
+    "collateralHaircut": 0.5,
+    "feeToRewards": 0.3,
+    "feeToRisk": 0.15,
+    "feeToLiquidity": 0.1,
+    "feeToOps": 0.45,
+    "borrowEnabled": false,
+    "borrowLTV": 0.25,
+    "liquidationLTV": 0.55,
+    "oracleDeviation": 0.1
+  },
+  "projects": [
+    {
+      "id": "forest",
+      "name": "Forest Restoration A",
+      "type": "Carbon Forward",
+      "sector": "Nature",
+      "location": "Synthetic / Central Africa",
+      "status": "Mock operating",
+      "stage": 1,
+      "capital": 4250000,
+      "annualRevenue": 320000,
+      "annualProtocolFees": 95000,
+      "annualCosts": 22000,
+      "exposure": 425000,
+      "reserveUSD": 240000,
+      "collateral": 1800000,
+      "curveA": 0.9,
+      "curveB": 1.2e-7,
+      "curveFee": 0.002,
+      "defaultPD": 0.06,
+      "lgd": 0.55,
+      "quality": 1.05,
+      "bootstrapWeight": 0.95,
+      "capacity": 5000000,
+      "milestones": [
+        "Baseline validated",
+        "Execution independently verified",
+        "Delivery verified"
+      ],
+      "description": "Fictitious project economics. No claim about an actual CCL project or its environmental performance."
+    },
+    {
+      "id": "solar",
+      "name": "Solar Water Access",
+      "type": "Green Debt",
+      "sector": "Infrastructure",
+      "location": "Synthetic / East Africa",
+      "status": "Mock operating",
+      "stage": 2,
+      "capital": 2800000,
+      "annualRevenue": 410000,
+      "annualProtocolFees": 128000,
+      "annualCosts": 31000,
+      "exposure": 280000,
+      "reserveUSD": 185000,
+      "collateral": 2600000,
+      "curveA": 1,
+      "curveB": 8e-8,
+      "curveFee": 0.002,
+      "defaultPD": 0.045,
+      "lgd": 0.4,
+      "quality": 1.1,
+      "bootstrapWeight": 1.1,
+      "capacity": 6000000,
+      "milestones": [
+        "Contracts approved",
+        "Commissioning verified",
+        "Debt service verified"
+      ],
+      "description": "Fictitious debt-financed infrastructure. Bondholder cash flows are separate from CCLX pool rewards."
+    },
+    {
+      "id": "mangrove",
+      "name": "Mangrove Delta",
+      "type": "Carbon Forward",
+      "sector": "Blue carbon",
+      "location": "Synthetic / Southeast Asia",
+      "status": "Mock early stage",
+      "stage": 0,
+      "capital": 3100000,
+      "annualRevenue": 170000,
+      "annualProtocolFees": 45000,
+      "annualCosts": 18000,
+      "exposure": 310000,
+      "reserveUSD": 120000,
+      "collateral": 1100000,
+      "curveA": 0.8,
+      "curveB": 1.5e-7,
+      "curveFee": 0.002,
+      "defaultPD": 0.09,
+      "lgd": 0.65,
+      "quality": 0.9,
+      "bootstrapWeight": 1.25,
+      "capacity": 4000000,
+      "milestones": [
+        "Project approved",
+        "Restoration verified",
+        "Environmental delivery verified"
+      ],
+      "description": "Fictitious early-stage project with explicitly uncertain revenue and delivery."
+    }
+  ],
+  "mock": {
+    "wallet": {
+      "usd": 25000,
+      "liquid": 0,
+      "restricted": 0,
+      "unvestedRestricted": 0,
+      "rewardLiquid": 0,
+      "restrictedRewards": 0,
+      "legacy": 150000,
+      "positions": []
+    },
+    "day": 0
+  }
+}
