@@ -47,7 +47,7 @@ export function existingProjectToCurveLab(p,i=0){
   capacityCCLX:p.capacity,attractiveness:p.quality,quality:p.quality,whalePreference:i===0?1.15:1,
   curve:{family:'linear',a:p.curveA,b:p.curveB,initialPrice:p.curveA,priceAtCapacity:p.curveA+p.curveB*p.capacity,capacity:p.capacity,origin:'existing_synthetic'},
   fees:{mintFee:p.curveFee,redemptionFee:p.curveFee,origin:'existing_synthetic'},
-  costs:{onboardingUSD:0,dailyUSD:p.annualCosts/365,origin:'existing_synthetic'},
+  costs:{onboardingUSD:0,dailyUSD:0,origin:'simplified_curve_lab_default',description:'Default Bonding Curve Lab keeps project operating costs off unless a stress scenario enables explicit costs.'},
   externalFees:{annualProtocolFeesUSD:p.annualProtocolFees,classification:'external_only',origin:'existing_synthetic'}
  };
 }

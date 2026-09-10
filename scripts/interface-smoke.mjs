@@ -24,7 +24,7 @@ export async function runInterfaceSmoke(){
  const check=(name,fn)=>{fn();checks.push(name);};
  const has=(text)=>{if(!rootEl.innerHTML.includes(text))throw Error('Missing rendered text: '+text);if(rootEl.innerHTML.includes('<h2>Render error</h2>'))throw Error('Render error: '+rootEl.innerHTML.slice(0,500));};
  check('Overview renders',()=>has('A product prototype and a quantitative lab'));
- for(const [page,expected] of [['mock','Application sandbox'],['curve-lab','Bonding Curve Lab'],['liquidity','Initial liquidity & market depth'],['funding','Funding, vesting & unlocks'],['stress','Monte Carlo & economic resilience'],['exploits','Exploit & adversarial economics'],['calibration','Market calibration'],['assumptions','Assumptions, governance & launch gates']])check('Render '+page,()=>{api.state.page=page;api.render();has(expected);});
+for(const [page,expected] of [['mock','CLX Lab'],['curve-lab','Bonding Curve Lab'],['liquidity','Initial liquidity & market depth'],['funding','Funding, vesting & unlocks'],['stress','Financial Simulation'],['exploits','Exploit & adversarial economics'],['calibration','Market calibration'],['assumptions','Assumptions, governance & launch gates']])check('Render '+page,()=>{api.state.page=page;api.render();has(expected);});
  check('Funding tables include the full round valuation and vesting structure',()=>{api.state.page='funding';api.render();has('$7,680,000');has('Strategic');has('Private 3');has('Restricted conversion capacity');});
  check('Mock purchase and allocation mutate balances',()=>{api.state.page='mock';api.state.mockAmount=1000;api.state.mockSide='buy';api.handleAction('mock-trade');if(api.state.mock.wallet.liquid<=0)throw Error('No purchased tokens');elements.set('#allocation-source',{value:'liquid'});elements.set('#pool-amount',{value:'1000'});api.handleAction('mock-allocate');if(!api.state.mock.wallet.positions.length)throw Error('Missing position');});
  check('Mock accrual and claim work',()=>{api.handleAction('advance-30');api.handleAction('mock-claim');if(api.state.mock.wallet.rewardLiquid<=0&&api.state.mock.wallet.usd<=24000)throw Error('No rewards paid');});
@@ -32,9 +32,9 @@ export async function runInterfaceSmoke(){
  check('Attack suite renders real results',()=>{api.state.page='exploits';api.handleAction('run-attacks');if(api.state.attacks.failed)throw Error('Attack suite failure');has('reentrancy');});
  check('Configuration validation rejects inconsistent changes',()=>{const before=api.state.mock.wallet.usd;try{api.changeConfig({dataset:{config:'supply'},value:'1'});}catch{}if(api.state.mock.wallet.usd!==before)throw Error('Invalid change mutated state');});
  api.state.page='stress';api.handleAction('run-stress');await new Promise(r=>setTimeout(r,50));if(!api.state.stress?.series)throw Error('Worker did not return results');has('Monthly stress heatmap');
- checks.push('Monte Carlo worker integration completes');
+checks.push('Financial Simulation worker integration completes');
  api.state.page='curve-lab';api.state.curveTab='simulation';api.handleAction('run-curve');await new Promise(r=>setTimeout(r,50));if(!api.state.curveResult?.daily?.length)throw Error('Curve worker did not return series');has('Daily series');checks.push('Bonding Curve Lab worker integration completes');
- api.state.curveTab='optimizer';api.handleAction('run-curve-optimizer');await new Promise(r=>setTimeout(r,50));if(!api.state.curveOptimizer?.candidates?.length)throw Error('Curve optimizer did not return candidates');has('Candidate results');checks.push('Bonding Curve Lab optimizer renders candidates');
+ api.handleAction('run-curve-optimizer');await new Promise(r=>setTimeout(r,50));if(!api.state.curveOptimizer?.candidates?.length)throw Error('Curve optimizer did not return candidates');api.state.curveTab='ledger';api.render();has('Fee policy');checks.push('Bonding Curve Lab optimizer remains available behind simplified UI');
  return {passed:checks.length,checks,mode:'Node VM render/integration smoke; not a browser or Android rendering test'};
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {defaults,clone} from '../src/model.js';
-import {defaultCurveLabConfig,condensedV5Config,validateCurveConfig} from '../src/curve-sim-config.js';
+import {defaultCurveLabConfig,condensedV5Config,validateCurveConfig,CURVE_LAB_SCENARIOS} from '../src/curve-sim-config.js';
 import {normalizeCurve,integral,inverseIntegral} from '../src/curve-families.js';
 import {runCurveSimulation,makeVault,quoteDeposit,quoteWithdrawal,quoteMigration,materializeCurveProjects,reconcileCurveState} from '../src/curve-simulation.js';
 import {optimizeCurveConfig} from '../src/curve-optimizer.js';
@@ -44,7 +44,14 @@ test('migration 10000 at 0.2% out and 0.2% in collects exactly 39.96 CCLX withou
 test('zero activity means zero curve fees while exogenous fees remain separate',()=>{
  const c=smallConfig();c.activity.actionsPerActiveMonth=0;
  const r=runCurveSimulation(c,{seed:77});near(r.summary.cumulativeFeesCCLX,0);near(r.feeAccounts.CCLX.netCollected,0);
+ near(r.summary.netProtocolResultUSD,0);
  assert.ok(c.projects[0].externalFees.annualProtocolFeesUSD>0);
+});
+
+test('organic growth keeps retained fees positive when explicit costs are disabled',()=>{
+ const c=smallConfig();c.horizonDays=120;c.participants.initial=200;c.totalInitialParticipants=200;c.totalInitialCapitalCCLX=200000;
+ const organic=CURVE_LAB_SCENARIOS.find(x=>x.id==='organic_growth').changes,r=runCurveSimulation(c,{seed:101,scenario:organic});
+ assert.ok(r.summary.cumulativeFeesCCLX>0);assert.ok(r.summary.protocolRetainedFeesCCLX>0);assert.ok(r.summary.netProtocolResultUSD>0);near(r.summary.modeledCostsUSD,0);
 });
 
 test('simulation conserves CCLX and is reproducible by config and seed',()=>{

@@ -107,7 +107,7 @@ function mutateDeposit(state,p,vault,participant,amount,source,day,eventId,allow
  pos.shares+=q.shares;pos.principalBasis+=q.gross;participant.positions[k]=pos;
  const fee=recordFee(state.feeAccounts,{projectId:p.id,profile:participant.profileId,source,operation:'entry',gross:q.fee,priceUSD:state.priceUSD,allocations:state.config.fees.allocations});
  state.transactions.push({eventId,day,participantId:participant.id,cohortId:participant.profileId,action:'deposit',originProject:'wallet',destinationProject:p.id,requestedAmount:amount,unit:'CCLX',executedAmount:q.gross,sharesMinted:q.shares,sharesBurned:0,gross:q.gross,net:q.net,feesCCLX:q.fee,feeStatus:fee.status,currency:'CCLX',provenance:source,status:q.status,rejectionReason:'',slippage:q.averageSlippage,capitalNew:q.gross,capitalRecycled:0});
- state.counters.deposits+=q.gross;state.counters.capitalNew+=q.gross;state.counters.actions++;if(q.partial)state.counters.partial++;
+state.counters.deposits+=q.gross;state.counters.capitalNew+=q.gross;state.counters.actions++;chargeActionSubsidy(state);if(q.partial)state.counters.partial++;
  return q;
 }
 
@@ -118,7 +118,7 @@ function mutateWithdrawal(state,p,vault,participant,pos,shares,day,eventId,actio
  const source=pos.restricted?'restricted':'unrestricted';participant.wallet[pos.restricted?'restricted':'unrestricted']+=q.output;
  const fee=recordFee(state.feeAccounts,{projectId:p.id,profile:participant.profileId,source,operation:'exit',gross:q.fee,priceUSD:state.priceUSD,allocations:state.config.fees.allocations});
  state.transactions.push({eventId,day,participantId:participant.id,cohortId:participant.profileId,action,originProject:p.id,destinationProject:'wallet',requestedAmount:shares,unit:'receipts',executedAmount:q.output,sharesMinted:0,sharesBurned:q.shares,gross:q.gross,net:q.output,feesCCLX:q.fee,feeStatus:fee.status,currency:'CCLX',provenance:source,status:'executed',rejectionReason:'',slippage:q.averageSlippage,capitalNew:0,capitalRecycled:q.output});
- state.counters.withdrawals+=q.gross;state.counters.actions++;
+state.counters.withdrawals+=q.gross;state.counters.actions++;chargeActionSubsidy(state);
  return q;
 }
 
@@ -134,7 +134,7 @@ function mutateMigration(state,fromP,toP,participant,pos,shares,day,eventId){
  if(quote.routingFee)recordFee(state.feeAccounts,{projectId:'network',profile:participant.profileId,source,operation:'routing',gross:quote.routingFee,priceUSD:state.priceUSD,allocations:state.config.fees.allocations});
  recordFee(state.feeAccounts,{projectId:toP.id,profile:participant.profileId,source,operation:'entry',gross:quote.destination.fee,priceUSD:state.priceUSD,allocations:state.config.fees.allocations});
  state.transactions.push({eventId,day,participantId:participant.id,cohortId:participant.profileId,action:'migration',originProject:fromP.id,destinationProject:toP.id,requestedAmount:shares,unit:'receipts',executedAmount:quote.netMoved,sharesMinted:quote.destination.shares,sharesBurned:quote.origin.shares,gross:quote.origin.gross,net:quote.destination.net,feesCCLX:quote.totalFees,currency:'CCLX',provenance:source,status:'executed',rejectionReason:'',slippage:Math.max(quote.origin.averageSlippage,quote.destination.averageSlippage),capitalNew:0,capitalRecycled:quote.netMoved,cannibalizedCapital:quote.netMoved});
- state.counters.migrations+=quote.netMoved;state.counters.actions++;
+state.counters.migrations+=quote.netMoved;state.counters.actions++;chargeActionSubsidy(state);
  return quote;
 }
 
@@ -170,6 +170,19 @@ function priceForDay(config,day){
  return Math.max(EPS,p);
 }
 
+function protocolRetainedFeesCCLX(accounts){
+ return sum(['treasury','reserve','lp','operations'].map(k=>accounts.CCLX[k]||0));
+}
+
+function chargeActionSubsidy(state){
+ const subsidy=state.config.fees.subsidyPerActionCCLX||0;
+ if(subsidy>0)state.costsUSD+=subsidy*state.priceUSD;
+}
+
+function projectDailyCostUSD(config,p){
+ return (config.costs?.projectDailyUSD||0)>0?config.costs.projectDailyUSD:(p.costs?.dailyUSD||0);
+}
+
 export function reconcileCurveState(state){
  const wallet=sum(state.participants.map(p=>p.wallet.unrestricted+p.wallet.restricted));
  const reserves=sum(Object.values(state.vaults).map(v=>v.backing));
@@ -189,7 +202,8 @@ function dailyMetrics(state,day){
  const active=state.participants.filter(p=>p.active).length,withPositions=state.participants.filter(p=>positionsList(p).length).length;
  const reserves=sum(Object.values(state.vaults).map(v=>v.backing)),fees=state.feeAccounts.CCLX.netCollected,reconcile=reconcileCurveState(state);
  const dayTx=state.transactions.filter(t=>t.day===day),slips=dayTx.map(t=>t.slippage).filter(Number.isFinite),rejected=dayTx.filter(t=>t.status==='rejected').length;
- return {day,priceUSD:state.priceUSD,participants:state.participants.length,activeParticipants:active,depositors:withPositions,phaseCounts,reservesCCLX:reserves,walletsCCLX:reconcile.wallet,feesCCLX:fees,feesIndicativeUSD:state.feeAccounts.USD.indicativeAtCollection,netProtocolResultUSD:state.feeAccounts.USD.indicativeAtCollection-state.costsUSD,externalInflowsCCLX:state.externalInflowsCCLX,capitalNewCCLX:state.counters.capitalNew,capitalRecycledCCLX:state.counters.migrations,depositVolumeCCLX:state.counters.deposits,withdrawalVolumeCCLX:state.counters.withdrawals,migrationVolumeCCLX:state.counters.migrations,actions:state.counters.actions,rejected,partial:state.counters.partial,p50Slippage:quantile(slips,.5),p95Slippage:quantile(slips,.95),accountingResidualCCLX:reconcile.residual,receiptResidual:reconcile.receiptsResidual};
+ const retained=protocolRetainedFeesCCLX(state.feeAccounts),retainedValue=retained*state.priceUSD;
+ return {day,priceUSD:state.priceUSD,participants:state.participants.length,activeParticipants:active,depositors:withPositions,phaseCounts,reservesCCLX:reserves,walletsCCLX:reconcile.wallet,feesCCLX:fees,feesIndicativeUSD:state.feeAccounts.USD.indicativeAtCollection,protocolRetainedFeesCCLX:retained,protocolRetainedValueUSD:retainedValue,modeledCostsUSD:state.costsUSD,netProtocolResultUSD:retainedValue-state.costsUSD,externalInflowsCCLX:state.externalInflowsCCLX,capitalNewCCLX:state.counters.capitalNew,capitalRecycledCCLX:state.counters.migrations,depositVolumeCCLX:state.counters.deposits,withdrawalVolumeCCLX:state.counters.withdrawals,migrationVolumeCCLX:state.counters.migrations,actions:state.counters.actions,rejected,partial:state.counters.partial,p50Slippage:quantile(slips,.5),p95Slippage:quantile(slips,.95),accountingResidualCCLX:reconcile.residual,receiptResidual:reconcile.receiptsResidual};
 }
 
 export function runCurveSimulation(input=defaultCurveLabConfig(),{seed=input.seed,onProgress,signal,scenario={}}={}){
@@ -202,7 +216,7 @@ export function runCurveSimulation(input=defaultCurveLabConfig(),{seed=input.see
   if(signal?.aborted)throw Error('cancelled');
   state.priceUSD=priceForDay(config,day);
   const added=addDailyParticipants(state,config,day,r);if(added.length)state.transactions.push({eventId:`e${++state.eventSeq}`,day,participantId:'network',cohortId:'new_entrants',action:'external_capital_inflow',originProject:'external',destinationProject:'wallets',requestedAmount:sum(added.map(p=>p.wallet.unrestricted+p.wallet.restricted)),unit:'CCLX',executedAmount:sum(added.map(p=>p.wallet.unrestricted+p.wallet.restricted)),gross:0,net:0,feesCCLX:0,currency:'CCLX',provenance:'external',status:'executed',rejectionReason:'',capitalNew:sum(added.map(p=>p.wallet.unrestricted+p.wallet.restricted)),capitalRecycled:0});
-  state.costsUSD+=config.costs.networkDailyUSD+sum(projects.filter(p=>phaseForProject(p,day)!=='not_created'&&phaseForProject(p,day)!=='closed').map(p=>(p.costs?.dailyUSD??config.costs.projectDailyUSD)));
+  state.costsUSD+=config.costs.networkDailyUSD+sum(projects.filter(p=>phaseForProject(p,day)!=='not_created'&&phaseForProject(p,day)!=='closed').map(p=>projectDailyCostUSD(config,p)));
   const activeProjects=availableProjects(state,day,'deposit');
   for(const idx of dayOrder()){
    const p=participants[idx];if(!p.active)continue;
@@ -248,7 +262,7 @@ export function summarizeCurveRun(result){
  const fees=result.feeAccounts.CCLX.netCollected,projectFees=Object.entries(result.feeAccounts.byProject).map(([id,v])=>({id,net:v.net}));
  const topProject=Math.max(0,...projectFees.map(x=>x.net)),feeConcentration=div(topProject,fees);
  return {
-  cumulativeFeesCCLX:fees,indicativeFeesUSD:result.feeAccounts.USD.indicativeAtCollection,netProtocolResultUSD:last.netProtocolResultUSD||0,
+  cumulativeFeesCCLX:fees,protocolRetainedFeesCCLX:last.protocolRetainedFeesCCLX||0,protocolRetainedValueUSD:last.protocolRetainedValueUSD||0,modeledCostsUSD:last.modeledCostsUSD||0,indicativeFeesUSD:result.feeAccounts.USD.indicativeAtCollection,netProtocolResultUSD:last.netProtocolResultUSD||0,
   averageDailyFeesCCLX:div(fees,d.length),averageMonthlyFeesCCLX:div(fees,months),takeRate:result.feeAccounts.realizedTakeRate,
   feesPerActiveParticipantCCLX:div(fees,activeAvg),reserveAverageCCLX:avgReserve,reserveFinalCCLX:last.reservesCCLX||0,
   actionFrequencyMonthly:div(executed.length,activeAvg*months),vaultTurnover:div((last.depositVolumeCCLX||0)+(last.withdrawalVolumeCCLX||0)+2*(last.migrationVolumeCCLX||0),avgReserve),
@@ -262,8 +276,8 @@ export function summarizeCurveRun(result){
 }
 
 export function exportNetworkCSV(result){
- const h=['day','price_usd','participants','active_participants','announced','open','funded','operating','matured_closed','reserves_cclx','fees_cclx','fees_indicative_usd','net_protocol_result_usd','deposit_volume_cclx','withdrawal_volume_cclx','migration_volume_cclx','rejected','p95_slippage','accounting_residual_cclx'];
- return [h,...result.daily.map(r=>[r.day,r.priceUSD,r.participants,r.activeParticipants,r.phaseCounts.announced,r.phaseCounts.open_for_deposits,r.phaseCounts.funded,r.phaseCounts.operating,r.phaseCounts.matured+r.phaseCounts.closed,r.reservesCCLX,r.feesCCLX,r.feesIndicativeUSD,r.netProtocolResultUSD,r.depositVolumeCCLX,r.withdrawalVolumeCCLX,r.migrationVolumeCCLX,r.rejected,r.p95Slippage,r.accountingResidualCCLX])];
+ const h=['day','price_usd','participants','active_participants','announced','open','funded','operating','matured_closed','reserves_cclx','fees_cclx','protocol_retained_fees_cclx','fees_indicative_usd','protocol_retained_value_usd','modeled_costs_usd','net_protocol_result_usd','deposit_volume_cclx','withdrawal_volume_cclx','migration_volume_cclx','rejected','p95_slippage','accounting_residual_cclx'];
+ return [h,...result.daily.map(r=>[r.day,r.priceUSD,r.participants,r.activeParticipants,r.phaseCounts.announced,r.phaseCounts.open_for_deposits,r.phaseCounts.funded,r.phaseCounts.operating,r.phaseCounts.matured+r.phaseCounts.closed,r.reservesCCLX,r.feesCCLX,r.protocolRetainedFeesCCLX,r.feesIndicativeUSD,r.protocolRetainedValueUSD,r.modeledCostsUSD,r.netProtocolResultUSD,r.depositVolumeCCLX,r.withdrawalVolumeCCLX,r.migrationVolumeCCLX,r.rejected,r.p95Slippage,r.accountingResidualCCLX])];
 }
 
 export function exportTransactionsCSV(result){
@@ -282,7 +296,9 @@ This report is a local synthetic simulation. The condensed v5 inputs remain mark
 ## Summary
 
 - Fees collected: ${s.cumulativeFeesCCLX.toFixed(2)} CCLX
+- Protocol retained fees: ${s.protocolRetainedFeesCCLX.toFixed(2)} CCLX
 - Indicative fee value: $${s.indicativeFeesUSD.toFixed(2)}
+- Modeled costs and subsidies: $${s.modeledCostsUSD.toFixed(2)}
 - Net protocol result after modeled costs: $${s.netProtocolResultUSD.toFixed(2)}
 - Average reserve: ${s.reserveAverageCCLX.toFixed(2)} CCLX
 - Action frequency: ${s.actionFrequencyMonthly.toFixed(3)} actions / active participant / month

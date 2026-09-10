@@ -114,10 +114,11 @@ test('restricted borrowing is prohibited even when ordinary borrowing is enabled
 test('attack suite distinguishes model passes from external verification',()=>{
  const r=runAttackSuite(c);assert.equal(r.failed,0);assert.ok(r.passed>=15);assert.ok(r.unverified>=4);assert.ok(r.results.some(x=>x.id==='reentrancy'&&x.status==='unverified'));
 });
-test('Monte Carlo is seeded, finite and reports actual depth breaches',()=>{
+test('Financial Simulation base grows while stress scenarios still report depth breaches',()=>{
  const x=clone(c);x.stress.paths=8;x.stress.months=24;
  const a=runStress(x),b=runStress(x);assert.deepEqual(a.summary,b.summary);assert.equal(a.series.length,24);
- assert.ok(a.summary.depthBreachProbability>0);assert.ok(a.summary.depthBreachProbability<=1);
+ assert.ok(a.summary.terminalPrice.p50>x.launchPrice);assert.ok(a.summary.depthBreachProbability>=0&&a.summary.depthBreachProbability<=1);
+ const stressed=runStress(x,SCENARIOS.find(s=>s.id==='liquidity').changes);assert.ok(stressed.summary.depthBreachProbability>0);assert.ok(stressed.summary.depthBreachProbability<=1);
  assert.ok(a.summary.reserveExhaustionProbability>=0&&a.summary.reserveExhaustionProbability<=1);
  const p=simulatePath(x,x.stress.seed);assert.equal(p.summary.depthBreach,p.rows.some(r=>r.coverage!==null&&r.coverage<x.liquidity.coverageTarget));
  for(const row of p.rows){assert.ok(Number.isFinite(row.price)&&row.price>0);assert.ok(row.liquidityReserve>=0&&row.riskReserve>=0);assert.ok(row.dexQuote>=0);assert.ok(row.cumulativeEmitted<=rewardCumulative(row.month,x.rewardBudget)+1e-4);assert.ok(row.restrictedReward>=0);assert.ok(row.restrictedStaked<=row.staked+1e-6);assert.equal(row.byBucket.bridge,0);assert.ok(row.unfilled>=0&&row.queue>=0);assert.ok(row.liquidCirculating<=x.supply);}

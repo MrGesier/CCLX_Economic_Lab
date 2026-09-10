@@ -7,8 +7,10 @@ This report is a local synthetic simulation. The condensed v5 inputs remain mark
 ## Summary
 
 - Fees collected: 122.54 CCLX
+- Protocol retained fees: 91.90 CCLX
 - Indicative fee value: $33.70
-- Net protocol result after modeled costs: $-35174.52
+- Modeled costs and subsidies: $0.00
+- Net protocol result after modeled costs: $25.27
 - Average reserve: 5527918.99 CCLX
 - Action frequency: 0.256 actions / active participant / month
 - Vault turnover, both migration legs included: 0.0111

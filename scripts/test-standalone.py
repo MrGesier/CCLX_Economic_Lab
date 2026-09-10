@@ -25,7 +25,7 @@ with sync_playwright() as pw:
     page.locator('[data-config="stress.months"]').dispatch_event('change')
     page.locator('[data-action="run-stress"]').first.click()
     page.get_by_text('Monthly stress heatmap').wait_for(timeout=60000)
-    print('Monte Carlo completed successfully')
+    print('Financial Simulation completed successfully')
     assert not errors,errors
     width=page.evaluate('document.documentElement.scrollWidth')
     print('Viewport:',page.evaluate('window.innerWidth'),'document width:',width)

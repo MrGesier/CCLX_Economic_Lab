@@ -252,8 +252,9 @@
         },
         "costs": {
           "onboardingUSD": 0,
-          "dailyUSD": 60.273972602739725,
-          "origin": "existing_synthetic"
+          "dailyUSD": 0,
+          "origin": "simplified_curve_lab_default",
+          "description": "Default Bonding Curve Lab keeps project operating costs off unless a stress scenario enables explicit costs."
         },
         "externalFees": {
           "annualProtocolFeesUSD": 95000,
@@ -301,8 +302,9 @@
         },
         "costs": {
           "onboardingUSD": 0,
-          "dailyUSD": 84.93150684931507,
-          "origin": "existing_synthetic"
+          "dailyUSD": 0,
+          "origin": "simplified_curve_lab_default",
+          "description": "Default Bonding Curve Lab keeps project operating costs off unless a stress scenario enables explicit costs."
         },
         "externalFees": {
           "annualProtocolFeesUSD": 128000,
@@ -350,8 +352,9 @@
         },
         "costs": {
           "onboardingUSD": 0,
-          "dailyUSD": 49.31506849315068,
-          "origin": "existing_synthetic"
+          "dailyUSD": 0,
+          "origin": "simplified_curve_lab_default",
+          "description": "Default Bonding Curve Lab keeps project operating costs off unless a stress scenario enables explicit costs."
         },
         "externalFees": {
           "annualProtocolFeesUSD": 45000,
@@ -363,8 +366,11 @@
   },
   "summary": {
     "cumulativeFeesCCLX": 122.53507289877113,
+    "protocolRetainedFeesCCLX": 91.90130467407836,
+    "protocolRetainedValueUSD": 25.27285878537155,
+    "modeledCostsUSD": 0,
     "indicativeFeesUSD": 33.69714504716205,
-    "netProtocolResultUSD": -35174.522033034984,
+    "netProtocolResultUSD": 25.27285878537155,
     "averageDailyFeesCCLX": 0.6769893530318847,
     "averageMonthlyFeesCCLX": 20.42251214979519,
     "takeRate": 1,
